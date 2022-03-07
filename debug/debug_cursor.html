@@ -1,0 +1,60 @@
+<!-- github : https://github.com/supermedium/superframe/tree/master/components/debug-cursor/ -->
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://eminet666.github.io/ensaama/components/debug/debug.js"></script>
+    <!-- <script src="./debug.js"></script> -->
+    <script>
+        AFRAME.registerComponent('tourne', {
+            schema: {
+                angle: { type: 'number', default: 45 },
+            },
+            init: function () {
+                let angle = this.data.angle;
+                el = this.el;
+
+                document.addEventListener('test', evt => {
+                    let rot = el.getAttribute('rotation');
+                    rot.y += angle;
+                    el.setAttribute('rotation', '0 ' + rot.y + ' 0');
+                });
+            }
+        });         
+
+        AFRAME.registerComponent('random-color', {
+            init: function () {
+                var lastIndex = -1;
+                var colors = ['red', 'green', 'blue'];
+
+                this.el.addEventListener('test2', function (evt) {
+
+                    lastIndex = (lastIndex + 1) % colors.length;
+                    this.setAttribute('material', 'color', colors[lastIndex]);
+                });
+            }
+        });        
+    </script>    
+</head>
+        
+<body>
+    <a-scene background="color: skyblue">
+        <a-entity raycaster="objects: .collidable" 
+                  cursor="rayOrigin: mouse" 
+                  debug-cursor="detect: #boite-click-test, #boule-mouseenter-test2; log: false">
+        </a-entity>
+
+
+        <a-box id="boite" class="collidable" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"
+        tourne="angle: 30"></a-box>
+
+        <a-sphere id="boule" class="collidable" position="0 1.25 -5" radius="1.25" color="#EF2D5E"
+            random-color></a-sphere>
+        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="gray"></a-plane>
+
+
+</a-scene>
+</body>
+
+</html>

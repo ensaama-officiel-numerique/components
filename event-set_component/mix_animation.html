@@ -1,0 +1,66 @@
+<!-- https://github.com/n5ro/aframe-extras/tree/master/src/loaders -->
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://eminet666.github.io/ensaama/components/debug/debug.js"></script>
+
+    <script>
+    AFRAME.registerComponent('test', {
+        init: function () {
+            let el = this.el;
+            //console.log(this.el)
+            console.log(el.getAttribute('mixin'));
+
+            el.addEventListener('enter-0', function (event) {
+                console.log("enter-0 : "+el.getAttribute('mixin'));
+            });             
+
+            el.addEventListener('exit-0', function (event) {
+                console.log("exit-0 : " +el.getAttribute('mixin'));
+            });            
+
+        }
+    });
+    </script>
+
+
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" 
+        debug-keyboard="key: e, r; event: enter-0, exit-0; target: #boite, #boite">
+
+        <a-assets>
+            <a-mixin id="anim0" animation__void="property: height; from: 1; to: 1; dur: 0; loop: false"></a-mixin>
+            <a-mixin id="anim1" animation__height="property: height; from: 1; to: 3; dur: 1000; loop: true"></a-mixin>
+            <a-mixin id="anim2" animation__rotation="property: rotation; from: 0 0 0; to: 360 0 0; dur: 1000; loop: true"></a-mixin>
+            <a-mixin id="anim3" animation__color="property: color; from: #ff0000; to: #0000ff; dur: 1000; loop: true; dir: alternate"></a-mixin>
+        </a-assets>
+
+        <a-box id="boite" position="-1 1 -2" scale="0.5 0.5 0.5" color="gold"
+            mixin="anim1" test
+            event-set__enter-0 = "_event: enter-0; mixin: anim0;"
+            event-set__exit-0 = "_event: exit-0; mixin: anim2 anim3 ;">
+        </a-box>
+
+        <a-plane position="0 0 -2" rotation="-90 0 0" width="4" height="4" color="gray">
+        </a-plane>
+
+        <a-entity camera position="0 0.5 0" currentposition
+            look-controls wasd-controls="acceleration:10">
+            <a-text id="txtlog" value="appuyez sur les touches 'e' et 'r' \n pour envoyer des event 'enter-0' et 'exit-0'" 
+                align="center" color="#FF0000" position="0 0 -1" rotation="0 0 0"
+                scale="0.25 0.25 0.25">
+            </a-text>
+        </a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>

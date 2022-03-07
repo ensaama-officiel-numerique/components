@@ -1,0 +1,48 @@
+<!-- https://github.com/supermedium/superframe/tree/master/components/event-set/ -->
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.0.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://eminet666.github.io/ensaama/components/debug/debug.js"></script>
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" 
+        debug-keyboard="key: e, r, t, y; 
+                        event: enter-0, exit-0, enter-0, exit-0; 
+                        target: #boule, #boule, #boite, #boite;">
+
+        <a-sphere id="boule" visible="true" radius="0.2" position="0 0 -2" color="silver"
+            event-set__enter-0 = "_event: enter-0; material.color: blue;" 
+            event-set__exit-0 = "_event: exit-0; material.color: green; _target: #boite; _delay: 3000"> 
+        </a-sphere>
+        
+        <a-box id="boite" position="1 0 -2" rotation="0 45 0" color="silver" 
+            width="0.25" height="0.25" depth="0.25"
+            event-set__enter-0 = "_event: enter-0; material.color: red;" 
+            event-set__exit-0 = "_event: exit-0; material.color: yellow; _delay: 1000"
+            event-set__exit-0_1 = "_event: exit-0; material.color: cyan; _delay: 2000">
+        </a-box>
+
+        <a-plane position="0 0 -2" rotation="-90 0 0" width="4" height="4" color="gray">
+        </a-plane>
+
+        <a-entity camera position="0 0.5 0" currentposition
+            look-controls wasd-controls="acceleration:10">
+            <a-text id="txtlog" value="appuyez sur les touches 'e', 'r', 't', 'y' pour envoyer 
+                \n des events 'enter-0' et 'exit-0' a la sphere et à la box" 
+                align="center" color="#FF0000" position="0 0 -1" rotation="0 0 0"
+                scale="0.25 0.25 0.25">
+            </a-text>
+        </a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>

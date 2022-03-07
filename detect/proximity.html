@@ -1,0 +1,35 @@
+<!-- https://www.w3docs.com/snippets/javascript/how-to-create-and-trigger-event-in-javascript.html -->
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- <script src="https://eminet666.github.io/ensaama/components/detect/detect.js"></script> -->
+    <script src="./detect.js"></script>    
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" frequency="delay: 500">
+
+        <a-box id="boite" position="1 0 -2" rotation="0 45 0" color="silver"
+            width="0.25" height="0.25" depth="0.25" 
+            proximity="trace: true; seuils: 0.5, 1, 2">
+        </a-box>
+
+        <a-plane position="0 0 -2" rotation="-90 0 0" width="4" height="4" color="gray">
+        </a-plane>
+
+        <a-entity camera position="0 0.5 0" currentposition
+            look-controls wasd-controls="acceleration:10">
+            <a-text id="txtlog" value="position" align="center" color="#FF0000" position="0 0 -1" rotation="0 0 0"
+                scale="0.25 0.25 0.25">
+            </a-text>
+        </a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>

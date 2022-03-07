@@ -1,0 +1,42 @@
+<!-- https://www.w3docs.com/snippets/javascript/how-to-create-and-trigger-event-in-javascript.html -->
+<html>
+
+<head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.0.1/dist/aframe-extras.min.js"></script>
+    <script src="./components/change-model-color.js"></script>
+    <script src="./components/send-testevent.js"></script>
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" frequency="delay: 500">
+
+        <a-assets>
+            <a-asset-item id="model3D" src="./suzanne.glb"></a-asset-item>
+        </a-assets>
+
+        <a-entity id="suzanne" position="-1 0.25 -2" scale="0.25 0.25 0.25"
+            gltf-model="#model3D"
+            send-testevent="evt: objcolor;"
+            modify-objcolor="objname: Suzanne; newcolor: red; log: true;">
+        </a-entity>
+
+        <a-plane position="0 0 0" rotation="-90 0 0" width="4" height="4" color="gray">
+        </a-plane>
+
+        <a-entity camera position="0 0.5 0" currentposition
+            look-controls wasd-controls="acceleration:10">
+            <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -1"
+                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" material="color: black; shader: flat">
+            </a-entity>
+            <a-text id="txtlog" value="" align="center" color="#FF0000" position="0 0 -1" rotation="0 0 0"
+                scale="0.25 0.25 0.25">
+            </a-text>
+        </a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>
