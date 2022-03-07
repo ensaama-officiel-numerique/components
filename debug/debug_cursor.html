@@ -39,11 +39,9 @@
         
 <body>
     <a-scene background="color: skyblue">
-        <a-entity raycaster="objects: .collidable" 
-                  cursor="rayOrigin: mouse" 
-                  debug-cursor="detect: #boite-click-test, #boule-mouseenter-test2; log: false">
+        <a-entity raycaster="objects: .collidable" cursor="rayOrigin: mouse"
+            debug-cursor="detect: #boite-click-test, #boule-mouseenter-test2; log: false">
         </a-entity>
-
 
         <a-box id="boite" class="collidable" position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"
         tourne="angle: 30"></a-box>
@@ -53,6 +51,11 @@
         <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
         <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="gray"></a-plane>
 
+        <a-entity camera position="0 1.6 0" look-controls wasd-controls="acceleration:10">
+            <a-text id="txtlog" value="passer le pointer de souris sur la sphere \n ou cliquez sur le cube"
+                align="center" color="#FF0000" position="0 0.5 -1" rotation="0 0 0" scale="0.25 0.25 0.25">
+            </a-text>
+        </a-entity>
 
 </a-scene>
 </body>
