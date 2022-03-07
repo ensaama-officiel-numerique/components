@@ -2,7 +2,7 @@
 * principe : librairie de composants d'actions en réception à un événement
 * intégration : ajouter dans le head
 ```html
-<script src="https://eminet666.github.io/ensaama/components/actions/actions.js"></script>
+<script src="https://ensaama-officiel-numerique.github.io/components/actions/actions.js"></script>
 ```
 
 #### modify-objcolor

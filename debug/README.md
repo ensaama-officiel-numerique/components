@@ -2,7 +2,7 @@
 * principe : librairie de composants pour les tests et le debug
 * intégration : ajouter dans le head
 ```html
-<script src="https://eminet666.github.io/ensaama/components/debug/debug.js"></script>
+<script src="https://ensaama-officiel-numerique.github.io/components/debug/debug.js"></script>
 ```
 
 ### composant : debug-cursor

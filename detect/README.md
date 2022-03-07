@@ -2,7 +2,7 @@
 * principe : librairie de composants de détection qui envoie un événement
 * intégration : ajouter dans le head
 ```html
-<script src="https://eminet666.github.io/ensaama/components/detect/detect.js"></script>
+<script src="https://ensaama-officiel-numerique.github.io/components/detect/detect.js"></script>
 ```
 
 ### outils communs : trace VR (casque)
