@@ -12,7 +12,7 @@ Lien à ajouter dans le head
 ```
 
 ### syntaxe
-* voir la documentation : [githib](https://github.com/supermedium/superframe/tree/master/components/event-set/)
+* voir la documentation : [github](https://github.com/supermedium/superframe/tree/master/components/event-set/)
 
 ### exemples
 * [basic](./basic.html)
