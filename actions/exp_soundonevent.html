@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <title>My A-Frame Scene</title>
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <script src="https://ensaama-officiel-numerique.github.io/components/debug/debug.js"></script>
+    <script src="https://unpkg.com/aframe-play-sound-on-event@1.0.2/dist/aframe-play-sound-on-event.min.js"></script>
+</head>
+
+<body>
+    <a-scene background="color: skyblue"
+    debug-keyboard="key: r; event: test; target: #son-renard">
+
+        <a-assets>
+            <audio id="son" src="./renard.mp3"></audio>
+        </a-assets>
+
+        <a-entity id="son-renard" sound="src: #son" play-sound-on-event="mode: toggle-stop; event: test"
+            geometry="primitive: box">
+        </a-entity>
+
+    </a-scene>
+</body>
+
+</html>

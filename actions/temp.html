@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.0.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://ensaama-officiel-numerique.github.io/components/debug/debug.js"></script>
+    <!-- <script src="https://ensaama-officiel-numerique.github.io/components/actions/actions.js"></script> -->
+    <script src="./actions.js"></script>
+    <script>
+        // MODIFY-OBJCOLOR
+        AFRAME.registerComponent('play-sound', {
+            schema: {
+                events: { type: 'array' },
+            },
+            init: function () {
+                let el = this.el;
+                let events = this.data.events;
+                let audio = el.components.sound;
+                // play = audio.playSound();
+                // stop = audio.stopSound():
+                for (let i = 0; i < events.length; i++) {
+                    this.el.addEventListener(events[i], () => {
+                        el.playSound();
+                    });
+                }
+            }
+
+        });
+
+
+
+    </script>
+
+
+
+
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue"
+        debug-keyboard="key: r,t; event: approche, marche; target: #renard-son, #renard-son">
+
+        <a-assets>
+            <a-asset-item id="fox" src="./fox.glb"></a-asset-item>
+            <audio id="son" src="./vol.mp3" preload="auto" volume="1"></audio>
+        </a-assets>
+
+        <a-entity id="renard" position="-1 0 -2" scale="0.005 0.005 0.005" gltf-model="#fox"
+            animation-mixer="clip: Survey;" event-set__sound="_event: sound; mixin: run;">
+            <a-sound id="renard-son" src="#son" autoplay="false" position="0 0 0" volume="1"
+                play-sound="events: approche, marche"></a-sound>
+        </a-entity>
+
+        <a-plane position="0 0 -2" rotation="-90 0 0" width="4" height="4" color="gray">
+        </a-plane>
+
+        <a-entity camera position="0 0.5 0" currentposition look-controls wasd-controls="acceleration:10">
+            <a-text id="txtlog"
+                value="appuyez sur les touches 'e' et 'r' \n pour envoyer des event 'enter-0' et 'exit-0'"
+                align="center" color="#FF0000" position="0 0 -1" rotation="0 0 0" scale="0.25 0.25 0.25">
+            </a-text>
+        </a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>
