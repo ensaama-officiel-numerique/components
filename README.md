@@ -8,4 +8,3 @@
 ## external components
 * [event-set component](./event-set_component/)
 
-test
