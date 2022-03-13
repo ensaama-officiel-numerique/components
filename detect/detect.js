@@ -1,4 +1,6 @@
 // version 20220303
+// 20220228 _ initiale
+// 20220313 _ du composant head-height
 
 // FREQUENCY
 AFRAME.registerComponent('frequency', {
@@ -48,7 +50,8 @@ AFRAME.registerComponent('currentposition', {
         var wpos = this.el.object3D.getWorldPosition(wposition);
 
         player.pos.x = pos.x + wpos.x;
-        player.pos.y = pos.y + wpos.y;
+        player.pos.y = pos.y;
+        //player.pos.y = pos.y + wpos.y;
         player.pos.z = pos.z + wpos.z;
         //console.log(player.pos);
 
@@ -112,3 +115,38 @@ AFRAME.registerComponent('currentposition', {
 function dist(mypos) {
     return Math.sqrt((player.pos.x - mypos.x) ** 2 + (player.pos.z - mypos.z) ** 2);
 }
+
+// HEAD HEIGHT
+AFRAME.registerComponent('head-height', {
+    schema: {
+        trace: { type: 'boolean', default: false },
+        seuils: { type: 'array', default: [1] },
+        state: { type: 'string', default: '0' },
+    },
+    tick: function () {
+        // var cibles = this.data.cibles;
+        let seuils = this.data.seuils;
+        let state = this.data.state;
+        let hauteur = player.pos.y;
+
+        let newstate = 0;
+        for (let i = 0; i < seuils.length; i++) {
+            if (hauteur > seuils[i]) newstate = i + 1;
+        }
+        if (state != newstate) {
+            if (state < newstate) {
+                this.el.emit("heightup-" + newstate);
+                console.log("event : 'heightup-" + newstate + "' sent to #" + this.el.id);
+            } else {
+                this.el.emit("heightdown-" + newstate);
+                console.log("event : 'heightdown-" + newstate + "' sent to #" + this.el.id);
+            }
+            this.data.state = newstate;
+        }
+        if (this.data.trace) {
+            var log = document.querySelector('#txtlog');
+            log.setAttribute('value', "#" + this.el.id + " _ etat=" + newstate + " _ hauteur=" + hauteur.toFixed(2));
+        }
+    }
+});
+ 

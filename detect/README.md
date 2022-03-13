@@ -78,6 +78,30 @@ seuils: { type: 'array', default: [1]},
     - en s'éloignant de l'objet, un événement 'exit-N' où N correspond à la zone
 * [exemple](./proximity.html)
 
+#### head-height
+* objet : reçoit un event en fonction de la hauteur du casque
+* paramètres :
+```js
+trace: { type: 'boolean', default: false },
+seuils: { type: 'array', default: [1]},
+```
+* syntaxe : 
+```html
+<a-box id="boite" position="1 0 -2" rotation="0 45 0" color="silver"
+    width="0.25" height="0.25" depth="0.25" 
+    head-height="trace: true; seuils: 0.5, 1, 1.5">
+</a-box>
+```
+* remarques : (même principe que proximity)
+    - plusieurs seuils sont possibles (séparés par une vigule)
+    - la zone la plus basse est notée 0, puis 1, 2, en remontant
+    - quand le player se baisse, un événement 'heightdown-N' où N correspond à la zone
+    - quand le player remonte, un événement 'heightup-N' où N correspond à la zone
+* [exemple](./proximity.html)
+
+
+
+
 <!-- https://www.w3docs.com/snippets/javascript/how-to-create-and-trigger-event-in-javascript.html -->
 
 
