@@ -1,4 +1,4 @@
-## debug.js _ 20220228
+## debug.js _ 20220314
 * principe : librairie de composants pour les tests et le debug
 * intégration : ajouter dans le head
 ```html
@@ -6,14 +6,20 @@
 ```
 
 ### composant : debug-cursor
-* objet : permet de tester les objets avec la souris
-* résultat : envoi un event à une cible selon les actions 'mouseenter', 'mouseexit' et 'click'
+* objet : permet de tester les objets avec la souris qui simule le curseur
+* résultat : envoi un event à une cible selon les actions ('mousedown, 'mouseup', 'mouseenter', 'mouseexit' et 'click'
 * syntaxe : ajouter la ligne suivante à la scène   
 ```html     
 <a-entity id="debug-cursor" 
           raycaster="objects: .collidable" 
           cursor="rayOrigin: mouse" 
-          debug-cursor="detect: #boite-click-test, #boule-mouseenter-test2; log: false">
+          debug-cursor="detect: #colonne-click-tourne, 
+                                #boule-mouseenter-randomcolor; 
+                                #boite-mousedown-tourne,
+                                #boite-mouseup-randomcolor,
+                                #boule-mouseenter-randomcolor, 
+                                #boule-mouseleave-randomcolor;                                 
+                        log: false">
 </a-entity>
 ```
 * remarques : 

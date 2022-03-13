@@ -1,15 +1,28 @@
 // version 20220226
+// 20220228 _ initiale
+// 20220313 _ ajout des 2 actions souris 'mousedown' et 'mouseup'
 
+// debug-cursor
 AFRAME.registerComponent("debug-cursor", {
     schema: {
-        detect: { type: 'array' },
-        log: { type: 'boolean', default: false},
+        detect: {
+            type: 'array'
+        },
+        log: {
+            type: 'boolean',
+            default: false
+        },
     },
     init: function () {
         var self = this;
         let detect = this.data.detect;
         let log = this.data.log;
-
+        this.el.addEventListener("mousedown", function (evt) {
+            self.evt("mousedown", evt.detail.intersectedEl, "cyan", detect, log)
+        });
+        this.el.addEventListener("mouseup", function (evt) {
+            self.evt("mouseup", evt.detail.intersectedEl, "yellow", detect, log)
+        })
         this.el.addEventListener("mouseenter", function (evt) {
             self.evt("mouseenter", evt.detail.intersectedEl, "green", detect, log)
         });
@@ -23,21 +36,61 @@ AFRAME.registerComponent("debug-cursor", {
     evt: function (action, intersectedEl, color, detect, log) {
         for (var i = 0; i < detect.length; i++) {
             let cas = detect[i].split('-');
-                if (intersectedEl.id === cas[0].substr(1)) { // target id
-                    if(action === cas[1]){                   // mouse action
-                        intersectedEl.emit(cas[2]);          // event
-                        console.log("debug-cursor: event '" + cas[2] + 
-                                    "' sent on ["+ action +
-                                    "] to " + intersectedEl.id); 
-                    }               
+            if (intersectedEl == null) console.log("debug-cursor : target must have an id property");
+            else if (intersectedEl.id === cas[0].substr(1)) { // target id
+                if (action === cas[1]) { // mouse action
+                    intersectedEl.emit(cas[2]); // event
+                    console.log("debug-cursor: event '" + cas[2] +
+                        "' sent on [" + action +
+                        "] to " + intersectedEl.id);
+                }
             }
-        }    
+        }
         if (log) {
             console.log(`%c[${action}] ${intersectedEl.id}`, `color: ${color}`);
             console.log(intersectedEl);
         }
     }
 })
+
+// AFRAME.registerComponent("debug-cursor", {
+//     schema: {
+//         detect: { type: 'array' },
+//         log: { type: 'boolean', default: false},
+//     },
+//     init: function () {
+//         var self = this;
+//         let detect = this.data.detect;
+//         let log = this.data.log;
+
+//         this.el.addEventListener("mouseenter", function (evt) {
+//             self.evt("mouseenter", evt.detail.intersectedEl, "green", detect, log)
+//         });
+//         this.el.addEventListener("mouseleave", function (evt) {
+//             self.evt("mouseleave", evt.detail.intersectedEl, "red", detect, log)
+//         })
+//         this.el.addEventListener("click", function (evt) {
+//             self.evt("click", evt.detail.intersectedEl, "blue", detect, log)
+//         })
+//     },
+//     evt: function (action, intersectedEl, color, detect, log) {
+//         for (var i = 0; i < detect.length; i++) {
+//             let cas = detect[i].split('-');
+//                 if (intersectedEl.id === cas[0].substr(1)) { // target id
+//                     if(action === cas[1]){                   // mouse action
+//                         intersectedEl.emit(cas[2]);          // event
+//                         console.log("debug-cursor: event '" + cas[2] + 
+//                                     "' sent on ["+ action +
+//                                     "] to " + intersectedEl.id); 
+//                     }               
+//             }
+//         }    
+//         if (log) {
+//             console.log(`%c[${action}] ${intersectedEl.id}`, `color: ${color}`);
+//             console.log(intersectedEl);
+//         }
+//     }
+// })
 
 // debug-keyboard
 AFRAME.registerComponent('debug-keyboard', {

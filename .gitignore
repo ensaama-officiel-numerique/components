@@ -1,0 +1,14 @@
+# ignore files
+.DS_Store
+Thumbs.db
+~*.*
+
+# ignore files
+**/z_*.*
+**/!_*.*
+/todo.txt
+
+# ignore rep
+**/nodejs
+**/z_*
+
