@@ -97,10 +97,10 @@ AFRAME.registerComponent('currentposition', {
         }
         if (state != newstate) {
             if (state < newstate) {
-                this.el.emit("exit" + newstate);
+                this.el.emit("exit-" + newstate);
                 console.log("event : 'exit-" + newstate + "' sent to #" + this.el.id);
             } else {
-                this.el.emit("enter" + newstate);
+                this.el.emit("enter-" + newstate);
                 console.log("event : 'enter-" + newstate + "' sent to #" + this.el.id);
             }
             this.data.state = newstate;
