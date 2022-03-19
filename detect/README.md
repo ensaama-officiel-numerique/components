@@ -6,7 +6,7 @@
 ```
 
 ### test
-[handsposition](./handsposition.html)
+[handsposition 2](./handsposition.html)
 
 ### outils communs : trace VR (casque)
 * paramètres trace et log selon les composants
