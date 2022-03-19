@@ -184,8 +184,8 @@ AFRAME.registerComponent('handsposition', {
 
         if (this.data.trace) {
             var trace = document.querySelector('#txtlog');
-            var newvalue = 'left : x = ' + leftpos.x.toFixed(2) + ", z = " + leftpos.z.toFixed(2);
-            newvalue += '\n right: x = ' + rightpos.x.toFixed(2) + ", z = " + rightpos.z.toFixed(2);
+            var newvalue = 'left : x = ' + leftpos.x.toFixed(2) + ", y = " + leftpos.y.toFixed(2) + ", z = " + leftpos.z.toFixed(2);
+            newvalue += '\n right: x = ' + rightpos.x.toFixed(2) + ", y = " + rightpos.y.toFixed(2) + ", z = " + rightpos.z.toFixed(2);
             trace.setAttribute('value', newvalue);
         }
     }
