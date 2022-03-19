@@ -191,8 +191,8 @@ AFRAME.registerComponent('handsposition', {
     }
 });
 
-// HANDS HEIGHT
-AFRAME.registerComponent('hands-height', {
+// HANDS DISTZ
+AFRAME.registerComponent('hands-distz', {
     schema: {
         trace: {
             type: 'boolean',
@@ -215,35 +215,35 @@ AFRAME.registerComponent('hands-height', {
         let side = this.data.side;
         let seuils = this.data.seuils;
         let state = this.data.state;
-        let hauteur;
+        let distz;
         switch (side) {
             case 'left':
-                hauteur = player.left.y;
+                distz = -player.left.z;
                 break;
             case 'right':
-                hauteur = player.right.y;
+                distz = -player.right.z;
                 break;
             default:
-                hauteur = (player.left.y + player.right.y) / 2;
+                distz = -(player.left.z + player.right.z) / 2;
         }
 
         let newstate = 0;
         for (let i = 0; i < seuils.length; i++) {
-            if (hauteur > seuils[i]) newstate = i + 1;
+            if (distz > seuils[i]) newstate = i + 1;
         }
         if (state != newstate) {
             if (state < newstate) {
-                this.el.emit(side + "up-" + newstate);
-                console.log("event : '" + side + "up-" + newstate + "' sent to #" + this.el.id);
+                this.el.emit(side + "in-" + newstate);
+                console.log("event : '" + side + "in-" + newstate + "' sent to #" + this.el.id);
             } else {
-                this.el.emit(side + "up-" + newstate);
-                console.log("event : '" + side + "down-" + newstate + "' sent to #" + this.el.id);
+                this.el.emit(side + "out-" + newstate);
+                console.log("event : '" + side + "out-" + newstate + "' sent to #" + this.el.id);
             }
             this.data.state = newstate;
         }
         if (this.data.trace) {
             var log = document.querySelector('#txtlog');
-            log.setAttribute('value', "#" + this.el.id + " _ etat=" + newstate + " _ hauteur=" + hauteur.toFixed(2));
+            log.setAttribute('value', "#" + this.el.id + " _ etat=" + newstate + " _ distance-z=" + distz.toFixed(2));
         }
     }
 });

@@ -6,7 +6,7 @@
 ```
 
 ### test
-[handsheight](./handsheight.html)
+[handsdistz](./handsdistz.html)
 
 ### outils communs : trace VR (casque)
 * paramètres trace et log selon les composants

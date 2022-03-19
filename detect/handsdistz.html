@@ -1,0 +1,89 @@
+<!-- https://www.w3docs.com/snippets/javascript/how-to-create-and-trigger-event-in-javascript.html -->
+<!-- https://devstephen.medium.com/keyboardevent-key-for-cross-browser-key-press-check-61dbad0a067a -->
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- <script src="https://ensaama-officiel-numerique.github.io/components/detect/detect.js"></script> -->
+    <script src="https://ensaama-officiel-numerique.github.io/components/debug/debug.js"></script>
+    <script src="./detect.js"></script> 
+    <script>
+
+    // composant pour visualier les changements de hauteur
+    AFRAME.registerComponent('modify-color', {
+        init: function () {
+            let el = this.el;
+            console.log(el.id);
+            // Wait for event
+            this.el.addEventListener('rightout-0', () => { el.setAttribute('color', 'red'); });
+            this.el.addEventListener('rightin-1', () => { el.setAttribute('color', 'green'); });                                  
+        }
+
+    });    
+
+    // composant pour tester avec les clavier (sans manette)
+    AFRAME.registerComponent('change-height', {
+        init: function () {
+            let el = this.el;
+            let key = ['h','b'];
+            document.addEventListener('keypress', evt => {
+                for (var i = 0; i < key.length; i++) {
+                    if (evt.key === key[0]) {
+                        console.log("key '"+key[0]+"' was pressed");
+                        let position = el.getAttribute('position');
+                        el.setAttribute("position", position.x+" "+position.y+" "+(position.z - 0.1));
+                    }
+                    if (evt.keyCode === key[1].codePointAt(0)) {
+                        console.log("key '" + key[1] + "' was pressed");
+                        let position = el.getAttribute('position');
+                        el.setAttribute("position", position.x + " " + position.y + " " + (position.z + 0.1));                    }                    
+                }
+            });
+        }
+    });
+
+    </script>    
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" frequency="delay: 500"
+        debug-keyboard="key: r; event: droiteup-2; target: #boite;">
+
+        <a-box id="boite" position="1 0 -2" rotation="0 45 0" color="silver"
+            width="0.25" height="0.25" depth="0.25" 
+            hands-distz="trace: trace; side: right; seuils: 0.5"
+            modify-color>
+        </a-box>
+
+        <a-plane position="0 0 -2" rotation="-90 0 0" width="4" height="4" color="gray">
+        </a-plane>
+
+        <!-- PLAYER -->
+        <a-entity id="cameraRig">
+        
+            <!-- TETE -->
+            <a-entity id="tete" camera position="0 0.5 0" currentposition handsposition
+                look-controls wasd-controls="acceleration:10">
+                <a-text id="txtlog" value="" align="center" color="#FF0000" position="0 0 -1" rotation="0 0 0"
+                    scale="0.25 0.25 0.25">
+                </a-text>
+            </a-entity>
+        
+            <!-- MAIN GAUCHE : utiliser oculus-touch-controls pour model3D -->
+            <a-entity id="gauche" hand-controls="hand: left; handModelStyle: lowPoly; color: #ffcccc">
+            </a-entity>
+        
+            <!-- MAIN DROITE : utiliser oculus-touch-controls pour model3D -->
+            <a-entity id="droite" hand-controls="hand: right; handModelStyle: lowPoly; color: #ffcccc" change-height>
+            </a-entity>
+        
+        </a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>
