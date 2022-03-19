@@ -34,8 +34,11 @@
             let seuils = this.data.seuils;
             let state = this.data.state;
             let hauteur;
-            if(side =='right') hauteur = player.right.y;
-            else hauteur = player.left.y;
+            switch(side) {
+                case 'left': hauteur = player.left.y; break;
+                case 'right': hauteur = player.right.y; break;
+                default: hauteur = (player.left.y + player.right.y)/2;
+            }
 
             let newstate = 0;
             for (let i = 0; i < seuils.length; i++) {
@@ -64,12 +67,12 @@
             let el = this.el;
             console.log(el.id);
             // Wait for event
-            this.el.addEventListener('rightup-3', () => { el.setAttribute('color', 'red'); });
-            this.el.addEventListener('rightup-2', () => { el.setAttribute('color', 'green'); });
-            this.el.addEventListener('rightup-1', () => { el.setAttribute('color', 'blue'); });                                    
-            this.el.addEventListener('rightdown-2', () => { el.setAttribute('color', 'green'); });
-            this.el.addEventListener('rightdown-1', () => { el.setAttribute('color', 'blue'); }); 
-            this.el.addEventListener('rightdown-0', () => { el.setAttribute('color', 'yellow'); });                                    
+            this.el.addEventListener('bothup-3', () => { el.setAttribute('color', 'red'); });
+            this.el.addEventListener('bothup-2', () => { el.setAttribute('color', 'green'); });
+            this.el.addEventListener('bothup-1', () => { el.setAttribute('color', 'blue'); });                                    
+            this.el.addEventListener('bothdown-2', () => { el.setAttribute('color', 'green'); });
+            this.el.addEventListener('bothdown-1', () => { el.setAttribute('color', 'blue'); }); 
+            this.el.addEventListener('bothdown-0', () => { el.setAttribute('color', 'yellow'); });                                    
         }
 
     });    
@@ -106,7 +109,7 @@
 
         <a-box id="boite" position="1 0 -2" rotation="0 45 0" color="silver"
             width="0.25" height="0.25" depth="0.25" 
-            hand-height="trace: trace; side: right; seuils: 0.5, 1, 2"
+            hand-height="trace: trace; side: both; seuils: 0.5, 1, 2"
             modify-color>
         </a-box>
 
