@@ -30,7 +30,17 @@ let player = {
         x: 0,
         y: 0,
         z: 0
-    }
+    },
+    left: {
+        x: 0,
+        y: 0,
+        z: 0
+    },
+    right: {
+        x: 0,
+        y: 0,
+        z: 0
+    },
 }
 
 function dist(mypos) {
@@ -146,6 +156,37 @@ AFRAME.registerComponent('head-height', {
         if (this.data.trace) {
             var log = document.querySelector('#txtlog');
             log.setAttribute('value', "#" + this.el.id + " _ etat=" + newstate + " _ hauteur=" + hauteur.toFixed(2));
+        }
+    }
+});
+
+// HANDSPOSITION
+AFRAME.registerComponent('handsposition', {
+    schema: {
+        trace: {
+            type: 'boolean',
+            default: false
+        },
+        left: { type: 'string', default: 'gauche' },
+        right: { type: 'string', default: 'droite' }
+    },
+    init: function () {
+        let left = document.querySelector('#' + this.data.left);
+        this.data.left = left;
+        let right = document.querySelector('#' + this.data.right);
+        this.data.right = right;
+    },
+    tick: function () {
+        let leftpos = this.data.left.getAttribute('position');
+        let rightpos = this.data.right.getAttribute('position');
+        player.left = leftpos;
+        player.right = rightpos;
+
+        if (this.data.trace) {
+            var trace = document.querySelector('#txtlog');
+            var newvalue = 'left : x = ' + leftpos.x.toFixed(2) + ", z = " + leftpos.z.toFixed(2);
+            newvalue += '\n right: x = ' + rightpos.x.toFixed(2) + ", z = " + rightpos.z.toFixed(2);
+            trace.setAttribute('value', newvalue);
         }
     }
 });
