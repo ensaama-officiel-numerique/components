@@ -1,0 +1,125 @@
+<!-- https://www.w3docs.com/snippets/javascript/how-to-create-and-trigger-event-in-javascript.html -->
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.0.1/dist/aframe-extras.min.js"></script>
+    <!-- <script src="https://ensaama-officiel-numerique.github.io/components/detect/detect.js"></script> -->
+    <!-- <script src="./detect_new.js"></script> -->
+
+    <script>
+    // CURRENTPOSITION
+        let player = {
+            pos: {
+                x: 0,
+                y: 0,
+                z: 0
+            },
+            left:{
+                x: 0,
+                y: 0,
+                z: 0
+            },
+            right: {
+                x: 0,
+                y: 0,
+                z: 0
+            },            
+        }
+        function dist(mypos) {
+            return Math.sqrt((player.pos.x - mypos.x) ** 2 + (player.pos.z - mypos.z) ** 2)
+        }
+
+    AFRAME.registerComponent('currentposition', {
+        schema: {
+            trace: {
+                type: 'boolean',
+                default: false
+            },
+        },
+        tick: function () {
+            var pos = this.el.object3D.position;
+            var wposition = new THREE.Vector3();
+            var wpos = this.el.object3D.getWorldPosition(wposition);
+
+            player.pos.x = pos.x + wpos.x;
+            player.pos.y = pos.y;
+            //player.pos.y = pos.y + wpos.y;
+            player.pos.z = pos.z + wpos.z;
+            //console.log(player.pos);
+
+            if (this.data.trace) {
+                var trace = document.querySelector('#txtlog');
+                var newvalue = 'x = ' + player.pos.x.toFixed(2) + ", z = " + player.pos.z.toFixed(2);
+                trace.setAttribute('value', newvalue);
+            }
+        }
+    });        
+
+        AFRAME.registerComponent('handsposition', {
+            schema: {
+                trace: {
+                    type: 'boolean',
+                    default: false
+                },
+                left: { type: 'string', default: 'gauche'},
+                right: { type: 'string', default: 'droite'}
+            },
+            init: function () {
+                let left = document.querySelector('#' + this.data.left);
+                this.data.left = left;
+                let right = document.querySelector('#' + this.data.right);
+                this.data.right = right;                
+            },            
+            tick: function () {
+                let leftpos = this.data.left.getAttribute('position');
+                let rightpos = this.data.right.getAttribute('position');   
+                playyer.left = leftpos;
+                player.right = rightpos;          
+
+                if (this.data.trace) {
+                    var trace = document.querySelector('#txtlog');
+                    var newvalue = 'left : x = ' + leftpos.x.toFixed(2) + ", z = " + leftpos.z.toFixed(2);
+                    newvalue += '\n right: x = ' + rightpos.x.toFixed(2) + ", z = " + rightpos.z.toFixed(2);
+                    trace.setAttribute('value', newvalue);
+                }
+            }
+        });
+    </script>    
+
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" frequency="delay: 500;">
+
+        <a-plane position="0 0 0" rotation="-90 0 0" width="2" height="2" color="gray">
+        </a-plane>
+
+        <!-- PLAYER -->
+        <a-entity id="cameraRig">
+        
+            <!-- TETE -->
+            <a-entity id="tete" camera position="0 0.5 0" 
+                currentposition="trace: false" handsposition="trace: true"
+                look-controls wasd-controls="acceleration:10">
+                <a-text id="txtlog" value="" align="center" color="#FF0000" position="0 0 -1" rotation="0 0 0"
+                    scale="0.25 0.25 0.25">
+                </a-text>
+            </a-entity>            
+        
+            <!-- MAIN GAUCHE : utiliser oculus-touch-controls pour model3D -->
+            <a-entity id="gauche" hand-tracking-controls="hand: left;"></a-entity>
+        
+            <!-- MAIN DROITE : utiliser oculus-touch-controls pour model3D -->
+            <a-entity id="droite" hand-tracking-controls="hand: right;"></a-entity>
+
+        </a-entity>
+
+    </a-scene>
+
+</body>
+
+</html>
