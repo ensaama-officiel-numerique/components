@@ -85,7 +85,7 @@ seuils: { type: 'array', default: [1]},
 * [exemple](./proximity.html)
 
 #### head-height
-* objet : reçoit un event en fonction de la hauteur du casque
+* objet : envoie un event en fonction de la hauteur du casque
 * paramètres :
 ```js
 trace: { type: 'boolean', default: false },
@@ -126,7 +126,7 @@ right: { type: 'string', default: 'droite' }
 * [exemple](./handsposition.html)
 
 #### hands-height
-* objet : reçoit un event en fonction des manettes
+* objet : envoie un event en fonction de la hauteur des manettes
 * paramètres :
 ```js
 trace: { type: 'boolean', default: false },
@@ -149,6 +149,31 @@ side: { type: 'string', default: 'right'}
     - quand la manette remonte, un événement 'SIDEup-N' où N correspond à la zone, SIDE à la valeur de 'side'
     - les touches 'h' et 'b' permettent de tester sans manette, permettant d'augmenter ou baisser la hauteur dans l'exemple ci-dessous.
 * [exemple](./handsheight.html)
+
+#### hands-distz
+* objet : envoie un event en fonction de la distance en z des manettes
+* paramètres :
+```js
+trace: { type: 'boolean', default: false },
+seuils: { type: 'array', default: [1]},
+state: { type: 'string', default: '0' },
+side: { type: 'string', default: 'right'}
+```
+* syntaxe : 
+```html
+<a-box id="boite" position="1 0 -2" rotation="0 45 0" color="silver"
+    width="0.25" height="0.25" depth="0.25" 
+    hands-distz="trace: true; side: right; seuils: 0.5, 1, 1.5">
+</a-box>
+```
+* remarques : (même principe que proximity)
+    - plusieurs seuils sont possibles (séparés par une vigule)
+    - la zone la plus basse est notée 0, puis 1, 2, en remontant
+    - le paramètre side peut prendre 3 valeurs : left, right ou both (moyenne de left & right)
+    - quand la manette se baisse, un événement 'SIDEout-N' où N correspond à la zone, SIDE à la valeur de 'side'.
+    - quand la manette remonte, un événement 'SIDEin-N' où N correspond à la zone, SIDE à la valeur de 'side'
+    - les touches 'h' et 'b' permettent de tester sans manette, permettant d'augmenter ou baisser la distance en z dans l'exemple ci-dessous.
+* [exemple](./handsdistz.html)
 
 
 
