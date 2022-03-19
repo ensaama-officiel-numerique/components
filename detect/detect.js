@@ -191,4 +191,60 @@ AFRAME.registerComponent('handsposition', {
     }
 });
 
+// HANDS HEIGHT
+AFRAME.registerComponent('hands-height', {
+    schema: {
+        trace: {
+            type: 'boolean',
+            default: false
+        },
+        seuils: {
+            type: 'array',
+            default: [1]
+        },
+        state: {
+            type: 'string',
+            default: '0'
+        },
+        side: {
+            type: 'string', default: 'right'
+        }
+    },
+    tick: function () {
+        // var cibles = this.data.cibles;
+        let side = this.data.side;
+        let seuils = this.data.seuils;
+        let state = this.data.state;
+        let hauteur;
+        switch (side) {
+            case 'left':
+                hauteur = player.left.y;
+                break;
+            case 'right':
+                hauteur = player.right.y;
+                break;
+            default:
+                hauteur = (player.left.y + player.right.y) / 2;
+        }
+
+        let newstate = 0;
+        for (let i = 0; i < seuils.length; i++) {
+            if (hauteur > seuils[i]) newstate = i + 1;
+        }
+        if (state != newstate) {
+            if (state < newstate) {
+                this.el.emit(side + "up-" + newstate);
+                console.log("event : '" + side + "up-" + newstate + "' sent to #" + this.el.id);
+            } else {
+                this.el.emit(side + "up-" + newstate);
+                console.log("event : '" + side + "down-" + newstate + "' sent to #" + this.el.id);
+            }
+            this.data.state = newstate;
+        }
+        if (this.data.trace) {
+            var log = document.querySelector('#txtlog');
+            log.setAttribute('value', "#" + this.el.id + " _ etat=" + newstate + " _ hauteur=" + hauteur.toFixed(2));
+        }
+    }
+});
  
