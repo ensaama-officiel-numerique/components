@@ -5,8 +5,8 @@
 <script src="https://ensaama-officiel-numerique.github.io/components/detect/detect.js"></script>
 ```
 
-### test
-[handsdistz](./handsdistz.html)
+<!-- ### test
+[handsdistz](./handsdistz.html) -->
 
 ### outils communs : trace VR (casque)
 * paramètres trace et log selon les composants
