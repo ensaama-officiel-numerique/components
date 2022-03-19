@@ -6,7 +6,7 @@
 ```
 
 ### test
-[handsposition 4](./handsposition.html)
+[handheight 1](./handheight.html)
 
 ### outils communs : trace VR (casque)
 * paramètres trace et log selon les composants
@@ -40,7 +40,10 @@ delay: { type: 'number', default: 1000 }
 #### currentposition
 * objet : repère la position du player
 ```js
-let player = { pos: { x: 0, y: 0, z: 0 } }
+let player = { pos: { x: 0, y: 0, z: 0 },
+               left: { x: 0, y: 0, z: 0 },
+               right: { x: 0, y: 0, z: 0 },
+} 
 ``` 
 * résultat : affiche la position du joueur avec l'option trace
     - local (déplacement physique) 
@@ -101,6 +104,25 @@ seuils: { type: 'array', default: [1]},
     - quand le player se baisse, un événement 'heightdown-N' où N correspond à la zone
     - quand le player remonte, un événement 'heightup-N' où N correspond à la zone
 * [exemple](./proximity.html)
+
+#### handsposition
+* objet : repère la position des mains du player
+* résultat : affiche la position des mains du joueur avec l'option trace
+* paramètres : 
+```js
+trace: { type: 'boolean', default: false},
+left: { type: 'string', default: 'gauche' },
+right: { type: 'string', default: 'droite' }
+```
+* syntaxe : 
+```html
+<a-entity camera handsposition="trace: true;"></a-entity>
+```
+* remarque : 
+    * utilise la variable globale player
+    * les paramètres left et right sont les paramètres id des mains gauche et droite.
+    * il est conseillé de choisir id="gauche" et id="droite"
+* [exemple](./handsposition.html)
 
 
 

@@ -190,4 +190,5 @@ AFRAME.registerComponent('handsposition', {
         }
     }
 });
+
  
