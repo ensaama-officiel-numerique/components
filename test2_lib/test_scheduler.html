@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="./debug.js"></script>
+    <script src="./effects-model.js"></script>
+    <script src="./effects-vertices.js"></script>
+    <script src="./scheduler.js"></script>
+</head>
+
+<body>
+
+    <!-- scénario JSON : lu par le composant scheduler via config: #scenario
+         ici pas de "target" par défaut : chaque cue précise la sienne (#chair1 ou #chair2) -->
+    <script type="application/json" id="scenario">
+    {
+        "timeline": [
+            { "time": 0,     "target": "#chair1", "event": "wireframe" },
+            { "time": 5000,  "target": "#chair2", "event": "vertices" },
+            { "time": 8000,  "target": "#chair1", "event": "transparent" },
+            { "time": 20000, "target": "#chair2", "event": "vertices-erosion" },
+            { "time": 35000, "target": "#chair1", "event": "desappear" },
+            { "time": 50000, "target": "#chair1", "event": "bluescreen" }
+        ],
+        "random": [
+            { "target": "#chair1", "events": ["wireframe"],       "interval": 10000, "jitter": 0.4 },
+            { "target": "#chair2", "events": ["vertices-glitch"], "interval": 6000,  "jitter": 0.5 }
+        ]
+    }
+    </script>
+
+    <a-scene background="color: skyblue"
+        debug-keyboard="key: p, o, l, m ;
+            event: start, stop, pause, resume ;
+            target: #director, #director, #director, #director">
+
+        <a-assets>
+            <a-asset-item id="model-obj" src="./assets/3D_models/obj_chair/Wooden_Chair.obj"></a-asset-item>
+            <a-asset-item id="model-mtl" src="./assets/3D_models/obj_chair/Wooden_Chair.mtl"></a-asset-item>
+        </a-assets>
+
+        <!-- entité "chef d'orchestre" : ne porte pas le modèle, juste le scheduler -->
+        <!-- autostart: false -> ici on garde le démarrage manuel (touche p) pour les tests.
+             le composant scheduler démarre automatiquement par défaut (autostart: true) ;
+             ce flag permet de choisir. -->
+        <a-entity id="director"
+            scheduler="config: #scenario; duration: 60000; loop: false; autostart: false">
+        </a-entity>
+
+        <!-- chair0 : chaise d'origine, position de départ, non ciblée par le scénario pour l'instant -->
+        <a-entity id="chair0" obj-model="obj: #model-obj; mtl: #model-mtl"
+            model-wireframe
+            model-transparent="opacity: 0.2"
+            model-desappear="opacity: 0.1; duration: 3000"
+            model-bluescreen="color: blue; duration: 200"
+            vertices="color: white; radius: 1; opacity: 0.15; ratio: 0.03"
+            vertices-glitch="amplitude: 1; duration: 1000; frequency: 60"
+            vertices-erosion="duration: 5000; percentage: 1.0; jitter: 0.3"
+            position="0 0 -5" scale="0.02 0.02 0.02"></a-entity>
+
+        <!-- chair1 : cible des effets "modèle" (wireframe, transparent, desappear, bluescreen) -->
+        <a-entity id="chair1" obj-model="obj: #model-obj; mtl: #model-mtl"
+            model-wireframe
+            model-transparent="opacity: 0.2"
+            model-desappear="opacity: 0.1; duration: 3000"
+            model-bluescreen="color: blue; duration: 200"
+            position="-2 0 -3" scale="0.02 0.02 0.02"></a-entity>
+
+        <!-- chair2 : cible des effets "vertices" (vertices, vertices-erosion, vertices-glitch) -->
+        <a-entity id="chair2" obj-model="obj: #model-obj; mtl: #model-mtl"
+            vertices="color: white; radius: 1; opacity: 0.15; ratio: 0.03"
+            vertices-glitch="amplitude: 1; duration: 1000; frequency: 60"
+            vertices-erosion="duration: 5000; percentage: 1.0; jitter: 0.3"
+            position="2 0 -3" scale="0.02 0.02 0.02"></a-entity>
+
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="6" height="4" color="silver"></a-plane>
+    </a-scene>
+
+    <!-- touches : p = start, o = stop, l = pause, m = resume -->
+
+</body>
+
+</html>

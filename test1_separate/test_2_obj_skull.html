@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="./debug.js"></script>
+    <script src="./effect-wireframe.js"></script>
+    <script src="./effect-transparent.js"></script>
+    <script src="./effect-desappear.js"></script>
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" 
+        debug-keyboard="key: w, i, e ; event: wireframe, transparent, desappear; target: #skull, #skull, #skull">
+        <a-assets>
+            <a-asset-item id="model-obj" src="./assets/3D_models/obj_skull/12140_Skull_v3_L2.obj"></a-asset-item>
+            <a-asset-item id="model-mtl" src="./assets/3D_models/obj_skull/12140_Skull_v3_L2.mtl"></a-asset-item>
+        </a-assets>
+
+        <a-entity id="skull" obj-model="obj: #model-obj; mtl: #model-mtl" 
+            effect-wireframe 
+            effect-transparent="opacity: 0.1" 
+            effect-desappear="opacity: 0.1; duration: 3000"
+            position="0 0 -5" scale="0.1 0.1 0.1" rotation="-90 -30 0"></a-entity>
+
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="silver"></a-plane>    
+    </a-scene>
+
+</body>
+
+</html>

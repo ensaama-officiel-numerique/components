@@ -56,6 +56,8 @@
     - par exemple ici : 
         - la touche 'r' envoie 'test' à l'id 'boite'
         - un composant ici 'tourne' sur 'boite' écoute l'event 'test' avec un addEventListener
+    - les valeurs de `key` correspondent à `evt.key` (et non `evt.keyCode`, désormais obsolète), donc sensibles à la casse ; pour une touche spéciale on écrit sa valeur `evt.key` (ex. `ArrowUp`, `Escape`)
+    - le composant écoute `keydown` (et non `keypress`), ce qui capte aussi les touches non-imprimables
 * [exemple](./debug_keyboard.html)
 
 ### composant : debug-fuse

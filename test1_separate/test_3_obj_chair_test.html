@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="./debug.js"></script>
+    <script src="./effect-wireframe.js"></script>
+    <script src="./effect-transparent.js"></script>
+    <script src="./effect-desappear.js"></script>
+    <script src="./effect-vertices.js"></script>
+    <script src="./effect-vertices-desappear.js"></script>
+    <script src="./effect-vertices-falling.js"></script>
+    <script src="./effect-vertices-glitch.js"></script>
+</head>
+
+<body>
+
+    <a-scene background="color: skyblue" 
+        debug-keyboard="key: w, i, e, v, b, n, g ; 
+            event: wireframe, transparent, desappear, vertices, vertices-desappear, vertices-falling, vertices-glitch; 
+            target: #chair, #chair, #chair, #chair, #chair, #chair, #chair">
+        <a-assets>
+            <a-asset-item id="model-obj" src="./assets/3D_models/obj_chair/Wooden_Chair.obj"></a-asset-item>
+            <a-asset-item id="model-mtl" src="./assets/3D_models/obj_chair/Wooden_Chair.mtl"></a-asset-item>
+        </a-assets>
+
+        <a-entity id="chair" obj-model="obj: #model-obj; mtl: #model-mtl" 
+            effect-wireframe 
+            effect-transparent="opacity: 0" 
+            effect-desappear="opacity: 0.1; duration: 3000"
+            effect-vertices="color: white; radius: 1; opacity: 0.15; ratio: 0.03"
+            effect-vertices-desappear="opacity: 0; duration: 3000"
+            effect-vertices-falling="duration: 3000; destroy: true"
+            effect-vertices-glitch="amplitude: 0.02; duration: 800; frequency: 60"
+            position="0 0 -5" scale="0.02 0.02 0.02"></a-entity>
+
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="silver"></a-plane>    
+    </a-scene>
+
+</body>
+
+</html>

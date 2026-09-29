@@ -1,7 +1,6 @@
 // version 20220226
 // 20220228 _ initiale
 // 20220313 _ ajout des 2 actions souris 'mousedown' et 'mouseup'
-// 20260926 _ corrections Claude sur debug_keybord
 
 // debug-cursor
 AFRAME.registerComponent("debug-cursor", {
@@ -57,14 +56,19 @@ AFRAME.registerComponent("debug-cursor", {
 // debug-keyboard
 AFRAME.registerComponent('debug-keyboard', {
     schema: {
-        key: { type: 'array' },
-        target: { type: 'array' },
-        event: { type: 'array' },
+        key: {
+            type: 'array'
+        },
+        target: {
+            type: 'array'
+        },
+        event: {
+            type: 'array'
+        },
     },
     init: function () {
         this.onKeydown = this.onKeydown.bind(this);
 
-        // vérification de cohérence des tableaux
         const { key, target, event } = this.data;
         if (key.length !== target.length || key.length !== event.length) {
             console.warn('debug-keyboard : les tableaux key, target et event doivent avoir la même longueur');
@@ -76,13 +80,17 @@ AFRAME.registerComponent('debug-keyboard', {
         const { key, target, event } = this.data;
         for (var i = 0; i < key.length; i++) {
             if (evt.key === key[i]) {
-                let cible = document.querySelector(target[i]);
-                if (!cible) {
+                // querySelectorAll : target[i] peut être un id (#xxx, 1 élément)
+                // ou une classe (.xxx, potentiellement plusieurs éléments)
+                let cibles = document.querySelectorAll(target[i]);
+                if (cibles.length === 0) {
                     console.warn("debug-keyboard : aucune cible trouvée pour le sélecteur '" + target[i] + "'");
                     continue;
                 }
-                cible.emit(event[i]);
-                console.log("debug-keyboard : event '" + event[i] + "' sent to " + target[i]);
+                cibles.forEach(function (cible) {
+                    cible.emit(event[i]);
+                });
+                console.log("debug-keyboard : event '" + event[i] + "' sent to " + cibles.length + " élément(s) '" + target[i] + "'");
             }
         }
     },
@@ -210,4 +218,3 @@ AFRAME.registerComponent('debug-fuse', {
             var trace = document.querySelector('#txtlog');
             trace.setAttribute('value', message);
         }
-
