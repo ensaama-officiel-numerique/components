@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script type="text/html" src="./audio-control.js"></script>
+    <link rel="stylesheet" href="./audio-control.css">
+</head>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <a-scene background="color: skyblue">
+        <a-assets>
+            <audio id="son" src="./assets/zorba_ok.mp3" preload="auto" loop="false"></audio>
+        </a-assets>
+    </a-scene>
+
+    <!-- Conteneur avec bouton et paragraphe dédié -->
+    <div id="audio">
+        <button id="bouton">SON ON</button>
+        <p class="audio-text">touche 's' départ immédiat, bouton délai 10s</p>
+    </div>
+
+    <!-- Script de contrôle audio -->
+    <script src="audio-control.js"></script>
+
+</body>
+
+</html>
