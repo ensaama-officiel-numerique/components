@@ -10,3 +10,6 @@
 
 ## numeric medium effects
 * [libs](./test3_notoggle/README.md)
+
+## audio control
+* [demo](./audio/index.html)
